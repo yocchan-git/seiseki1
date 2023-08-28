@@ -48,16 +48,6 @@ $edit = $prepare->fetch();
     <title>成績管理アプリ</title>
 </head>
 <body>
-<!-- <table border=1>
-        <tr><th>番号</th><th>学年</th><th>テスト名</th><th>作成日</th></tr>
-        <tr>
-            <td><?php echo $edit['id']; ?></td>
-            <td><?php echo $edit['year']; ?></td>
-            <td><?php echo $edit['name']; ?></td>
-            <td><?php echo $edit['create_at']; ?></td>
-        </tr>
-    </table> -->
-
     <form method="post" action="">
         <label for="year">学年（1〜３の数字で入力）</label><br>
         <input type="text" name="year" id="year" value="<?php echo $edit['year']; ?>">
