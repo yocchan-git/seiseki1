@@ -15,10 +15,9 @@ $tests = $db->query('SELECT * from tests');
 <body>
     <h1>テスト一覧</h1>
     <table border=1>
-        <tr><th>番号</th><th>学年</th><th>テスト名</th><th>作成日</th><th>変更はこちら</th><th>削除するか</th></tr>
+        <tr><th>学年</th><th>テスト名</th><th>作成日</th><th>変更はこちら</th><th>削除するか</th></tr>
         <?php foreach($tests as $test): ?>
         <tr>
-            <td><?php echo $test['id']; ?></td>
             <td><?php echo $test['year']; ?></td>
             <td><?php echo $test['name']; ?></td>
             <td><?php echo $test['create_at']; ?></td>
