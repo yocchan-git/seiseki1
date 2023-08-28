@@ -1,0 +1,100 @@
+<?php
+session_start();
+require('../db/dbconnect.php');
+
+if(!empty($_POST)){
+    $_SESSION['student'] = $_POST;
+
+    if(preg_match( '/^[0-9]+$/', $_POST['number']) == 0){
+        $error['number'] = 'hankaku';
+    }
+
+    if($_POST['number'] == ''){
+        $error['number'] = 'blank';
+    }
+
+    if(preg_match( '/^[0-9]+$/', $_POST['year']) == 0){
+        $error['year'] = 'hankaku';
+    }
+
+    if($_POST['year'] == ''){
+        $error['year'] = 'blank';
+    }
+
+    if($_POST['class'] == ''){
+        $error['class'] = 'blank';
+    }
+
+    if($_POST['name'] == ''){
+        $error['name'] = 'blank';
+    }
+
+    if(empty($error)){
+        $stmt = $db->prepare('INSERT into students set year=?, class=?, number=?, name=?, create_at=NOW()');
+        echo $ret = $stmt->execute(array(
+            $_SESSION['student']['year'],
+            $_SESSION['student']['class'],
+            $_SESSION['student']['number'],
+            $_SESSION['student']['name']
+        ));
+
+        unset($_SESSION['student']);
+
+        header('Location:index.php');
+        exit();
+    }
+    
+}
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>成績管理アプリ</title>
+</head>
+<body>
+    <form method="post" action="">
+        <label for="number">学籍番号</label><br>
+        <input type="text" id="number" name="number">
+            <?php if($error['number'] == 'hankaku'): ?>
+                <p style="color:red;">半角数字で入力してください</p>
+            <?php endif; ?>
+
+            <?php if($error['number'] == 'blank'): ?>
+                <p style="color:red;">入力してください</p>
+            <?php endif; ?>
+            <br><br>
+
+        <label for="year">学年（1〜３の数字で入力）</label><br>
+        <input type="text" name="year" id="year">
+            <?php if($error['year'] == 'hankaku'): ?>
+                <p style="color:red;">半角数字で入力してください</p>
+            <?php endif; ?>
+
+            <?php if($error['year'] == 'blank'): ?>
+                <p style="color:red;">入力してください</p>
+            <?php endif; ?>
+            <br><br>
+
+        <label for="class">クラス</label><br>
+        <input type="text" id="class" name="class">
+            <?php if($error['class'] == 'blank'): ?>
+                <p style="color:red;">入力してください</p>
+            <?php endif; ?>
+            <br><br>
+
+        <label for="name">名前</label><br>
+        <input type="text" name="name" id="name">
+            <?php if($error['name'] == 'blank'): ?>
+                <p style="color:red;">入力してください</p>
+            <?php endif; ?>
+            <br><br>
+
+        <input type="submit" value="追加する">
+    </form>
+    <a href="index.php">戻る</a>
+</body>
+</html>
