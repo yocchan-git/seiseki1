@@ -63,5 +63,6 @@ if(!empty($_POST)){
 
         <input type="submit" value="追加する">
     </form>
+    <a href="index.php">戻る</a>
 </body>
 </html>
