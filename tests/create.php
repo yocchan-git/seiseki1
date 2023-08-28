@@ -23,6 +23,11 @@ if(!empty($_POST)){
             $_SESSION['join']['year'],
             $_SESSION['join']['name']
         ));
+
+        unset($_SESSION['join']);
+
+        header('Location:index.php');
+        exit();
     }
     
 }
@@ -38,7 +43,6 @@ if(!empty($_POST)){
 </head>
 <body>
     <form method="post" action="">
-
         <label for="year">学年（1〜３の数字で入力）</label><br>
         <input type="text" name="year" id="year">
         <?php if($error['year'] == 'hankaku'): ?>
