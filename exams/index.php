@@ -32,6 +32,9 @@ $exams = $db->query('SELECT st.name as student_name,te.name as test_name,ex.koku
                     <td><?php echo $exam['goukei']; ?></td>
                 </tr>
             <?php endforeach; ?>
-    </table>
+    </table><br>
+    <a href="create.php">生徒の成績を入力</a><br><br>
+    <a href="ranking.php">テストごとにランキングで成績を見る</a><br>
+    <br><a href="../index.php">トップページ</a><br>
 </body>
 </html>
