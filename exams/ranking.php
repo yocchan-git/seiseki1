@@ -108,6 +108,7 @@ $stmt->execute(array($test_id));
                 echo '<a style="text-decoration: none;" href="ranking.php?id='.$if_test['id'].'">  '.$if_test['name'].'     </a>/';
             }
         }
+        echo '<br>'
     ?>
 
     <?php if(isset($test_id)): ?>
@@ -142,7 +143,8 @@ $stmt->execute(array($test_id));
             <?php endforeach; ?>
         </table><br>
         <a href="ranking.php">テスト選択に戻る</a><br><br>
-        <a href="download.php?id=<?php echo $test_id; ?>&rank=<?php echo 'gakuseki'; ?>">ダウンロードする</a>
+        <a href="download.php?id=<?php echo $test_id; ?>&rank=<?php echo 'gakuseki'; ?>">ダウンロードする</a><br>
     <?php endif; ?>
+    <br><a href="../index.php">トップページ</a><br>
 </body>
 </html>
