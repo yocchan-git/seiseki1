@@ -26,6 +26,7 @@ $tests = $db->query('SELECT * from tests');
         </tr>
         <?php endforeach; ?>
     </table>
-    <a href="create.php">テストを作成する</a>
+    <a href="create.php">テストを作成する</a><br>
+    <br><a href="../index.php">トップページ</a><br>
 </body>
 </html>
