@@ -60,36 +60,36 @@ if(!empty($_POST)){
         <label for="number">学籍番号</label><br>
         <input type="text" id="number" name="number">
             <?php if($error['number'] == 'hankaku'): ?>
-                <p style="color:red;">半角数字で入力してください</p>
+                <span style="color:red;">半角で入力してください</span>
             <?php endif; ?>
 
             <?php if($error['number'] == 'blank'): ?>
-                <p style="color:red;">入力してください</p>
+                <span style="color:red;">入力してください</span>
             <?php endif; ?>
             <br><br>
 
         <label for="year">学年（1〜３の数字で入力）</label><br>
         <input type="text" name="year" id="year">
             <?php if($error['year'] == 'hankaku'): ?>
-                <p style="color:red;">半角数字で入力してください</p>
+                <span style="color:red;">半角で入力してください</span>
             <?php endif; ?>
 
             <?php if($error['year'] == 'blank'): ?>
-                <p style="color:red;">入力してください</p>
+                <span style="color:red;">入力してください</span>
             <?php endif; ?>
             <br><br>
 
         <label for="class">クラス</label><br>
         <input type="text" id="class" name="class">
             <?php if($error['class'] == 'blank'): ?>
-                <p style="color:red;">入力してください</p>
+                <span style="color:red;">入力してください</span>
             <?php endif; ?>
             <br><br>
 
         <label for="name">名前</label><br>
         <input type="text" name="name" id="name">
             <?php if($error['name'] == 'blank'): ?>
-                <p style="color:red;">入力してください</p>
+                <span style="color:red;">入力してください</span>
             <?php endif; ?>
             <br><br>
 
