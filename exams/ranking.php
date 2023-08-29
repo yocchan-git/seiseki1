@@ -140,7 +140,8 @@ $stmt->execute(array($test_id));
                     <td><?php echo $result['goukei']; ?></td>
                 </tr>
             <?php endforeach; ?>
-        </table>
+        </table><br>
+        <a href="ranking.php">テスト選択に戻る</a><br><br>
         <a href="download.php?id=<?php echo $test_id; ?>&rank=<?php echo 'gakuseki'; ?>">ダウンロードする</a>
     <?php endif; ?>
 </body>
