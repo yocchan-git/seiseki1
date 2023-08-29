@@ -2,7 +2,7 @@
 session_start();
 require('../db/dbconnect.php');
 
-$exams = $db->query('SELECT st.name as student_name,te.name as test_name,ex.kokugo,ex.sugaku,ex.eigo,ex.rika,ex.shakai,ex.goukei
+$exams = $db->query('SELECT st.name as student_name,te.name as test_name,ex.kokugo,ex.sugaku,ex.eigo,ex.rika,ex.shakai,ex.goukei,ex.id
     from exams as ex
     inner join tests as te
     on ex.test_id = te.id
@@ -19,7 +19,7 @@ $exams = $db->query('SELECT st.name as student_name,te.name as test_name,ex.koku
 </head>
 <body>
     <table border=1>
-        <tr><th>テスト</th><th>生徒名</th><th>国語</th><th>数学</th><th>英語</th><th>理科</th><th>社会</th><th>合計</th></tr>
+        <tr><th>テスト</th><th>生徒名</th><th>国語</th><th>数学</th><th>英語</th><th>理科</th><th>社会</th><th>合計</th><th>変更</th><th>削除</th></tr>
             <?php foreach($exams as $exam): ?>
                 <tr>
                     <td><?php echo $exam['test_name']; ?></td>
@@ -30,6 +30,8 @@ $exams = $db->query('SELECT st.name as student_name,te.name as test_name,ex.koku
                     <td><?php echo $exam['rika']; ?></td>
                     <td><?php echo $exam['shakai']; ?></td>
                     <td><?php echo $exam['goukei']; ?></td>
+                    <td><a href="edit.php?id=<?php echo $exam['id']; ?>">変更</a></td>
+                    <td><a href="destory.php?id=<?php echo $exam['id']; ?>">削除</a></td>
                 </tr>
             <?php endforeach; ?>
     </table><br>
