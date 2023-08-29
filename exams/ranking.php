@@ -5,24 +5,18 @@ require('../db/dbconnect.php');
 $test_id = $_GET['id'];
 $rank = $_GET['rank'];
 
-
+// 選択画面に必要な処理
 if(!isset($test_id)){
     $if_tests = $db->query('SELECT id,name from tests');
 }
 
+// テスト名を表示するため
 if(isset($test_id)){
     $tests = $db->prepare('SELECT name from tests where id=?');
     $tests->execute(array($test_id));
 }
 
-// $stmt = $db->prepare('SELECT st.number,st.name as student_name,te.name as test_name,ex.kokugo,ex.sugaku,ex.eigo,ex.rika,ex.shakai,ex.goukei
-//     from exams as ex
-//     inner join tests as te
-//     on ex.test_id = te.id
-//         inner join students as st
-//         on ex.student_id = st.id
-//     where ex.test_id=?');
-
+// ランキング用のコード
 if($rank == 'gakuseki'){
     $stmt = $db->prepare('SELECT st.number,st.name as student_name,te.name as test_name,ex.kokugo,ex.sugaku,ex.eigo,ex.rika,ex.shakai,ex.goukei
     from exams as ex
@@ -97,16 +91,6 @@ if($rank == 'gakuseki'){
     order by st.number');
 }
 
-
-// $stmt = $db->prepare('SELECT st.number,st.name as student_name,te.name as test_name,ex.kokugo,ex.sugaku,ex.eigo,ex.rika,ex.shakai,ex.goukei
-//     from exams as ex
-//     inner join tests as te
-//     on ex.test_id = te.id
-//         inner join students as st
-//         on ex.student_id = st.id
-//     where ex.test_id=?
-//     order by st.number desc');
-
 $stmt->execute(array($test_id));
 ?>
 <!DOCTYPE html>
@@ -157,6 +141,7 @@ $stmt->execute(array($test_id));
                 </tr>
             <?php endforeach; ?>
         </table>
+        <a href="download.php?id=<?php echo $test_id; ?>&rank=<?php echo 'gakuseki'; ?>">ダウンロードする</a>
     <?php endif; ?>
 </body>
 </html>
