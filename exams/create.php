@@ -85,19 +85,59 @@ if(!empty($_POST)){
 
         <p>各教科の点数を入力してください</p>
         <label for="kokugo">国語</label><br>
-        <input name="kokugo" type="text" id="kokugo" value="" onKeyup="calc()"><br><br>
+        <input name="kokugo" type="text" id="kokugo" value="" onKeyup="calc()">
+            <?php if($error['kokugo'] == 'hankaku'): ?>
+                <span style="color:red;">半角で入力してください</span>
+            <?php endif; ?>
+
+            <?php if($error['kokugo'] == 'blank'): ?>
+                <span style="color:red;">入力してください</span>
+            <?php endif; ?>
+        <br><br>
 
         <label for="sugaku">数学</label><br>
-        <input name="sugaku" type="text" id="sugaku" value="" onKeyup="calc()"><br><br>
+        <input name="sugaku" type="text" id="sugaku" value="" onKeyup="calc()">
+            <?php if($error['sugaku'] == 'hankaku'): ?>
+                <span style="color:red;">半角で入力してください</span>
+            <?php endif; ?>
+
+            <?php if($error['sugaku'] == 'blank'): ?>
+                <span style="color:red;">入力してください</span>
+            <?php endif; ?>
+        <br><br>
 
         <label for="eigo">英語</label><br>
-        <input name="eigo" type="text" id="eigo" value="" onKeyup="calc()"><br><br>
+        <input name="eigo" type="text" id="eigo" value="" onKeyup="calc()">
+            <?php if($error['eigo'] == 'hankaku'): ?>
+                <span style="color:red;">半角で入力してください</span>
+            <?php endif; ?>
+
+            <?php if($error['eigo'] == 'blank'): ?>
+                <span style="color:red;">入力してください</span>
+            <?php endif; ?>
+        <br><br>
 
         <label for="rika">理科</label><br>
-        <input name="rika" type="text" id="rika" value="" onKeyup="calc()"><br><br>
+        <input name="rika" type="text" id="rika" value="" onKeyup="calc()">
+            <?php if($error['rika'] == 'hankaku'): ?>
+                <span style="color:red;">半角で入力してください</span>
+            <?php endif; ?>
+
+            <?php if($error['rika'] == 'blank'): ?>
+                <span style="color:red;">入力してください</span>
+            <?php endif; ?>
+        <br><br>
 
         <label for="shakai">社会</label><br>
-        <input name="shakai" type="text" id="shakai" value="" onKeyup="calc()"><br><br>
+        <input name="shakai" type="text" id="shakai" value="" onKeyup="calc()">
+            <?php if($error['shakai'] == 'hankaku'): ?>
+                <span style="color:red;">半角で入力してください</span>
+            <?php endif; ?>
+
+            <?php if($error['shakai'] == 'blank'): ?>
+                <span style="color:red;">入力してください</span>
+            <?php endif; ?>
+        <br><br>
 
         <label for="goukei">合計</label><br>
         <input type="text" name="goukei" value="0" readonly><br><br>
