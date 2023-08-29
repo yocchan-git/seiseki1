@@ -27,6 +27,7 @@ $students = $db->query('SELECT * from students');
         </tr>
         <?php endforeach; ?>
     </table>
-    <a href="create.php">生徒を登録する</a>
+    <a href="create.php">生徒を登録する</a><br>
+    <br><a href="../index.php">トップページ</a><br>
 </body>
 </html>
