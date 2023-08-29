@@ -103,7 +103,8 @@ if(!empty($_POST)){
         <input type="text" name="goukei" value="0" readonly><br><br>
 
         <input type="submit" value="登録する">
-    </form>
+    </form><br>
+    <a href="index.php">戻る</a>
 
 <script>
 const calc = ()=>{
