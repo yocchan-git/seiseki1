@@ -1,6 +1,5 @@
 <?php
-session_start();
-require('../db/dbconnect.php');
+require('../auth/login-check.php');
 
 $id = $_GET['id'];
 
