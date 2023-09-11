@@ -1,6 +1,6 @@
 <?php
-session_start();
-require('../db/dbconnect.php');
+require('../auth/login-check.php');
+require('../components/header.php');
 
 if(!empty($_POST)){
     $_SESSION['student'] = $_POST;
@@ -13,16 +13,8 @@ if(!empty($_POST)){
         $error['number'] = 'blank';
     }
 
-    if(preg_match( '/^[0-9]+$/', $_POST['year']) == 0){
-        $error['year'] = 'hankaku';
-    }
-
-    if($_POST['year'] == ''){
-        $error['year'] = 'blank';
-    }
-
-    if($_POST['class'] == ''){
-        $error['class'] = 'blank';
+    if($_POST['class_id'] == ''){
+        $error['class_id'] = 'blank';
     }
 
     if($_POST['name'] == ''){
@@ -30,10 +22,9 @@ if(!empty($_POST)){
     }
 
     if(empty($error)){
-        $stmt = $db->prepare('INSERT into students set year=?, class=?, number=?, name=?, create_at=NOW()');
+        $stmt = $db->prepare('INSERT into students set class_id=?, number=?, name=?, create_at=NOW()');
         echo $ret = $stmt->execute(array(
-            $_SESSION['student']['year'],
-            $_SESSION['student']['class'],
+            $_SESSION['student']['class_id'],
             $_SESSION['student']['number'],
             $_SESSION['student']['name']
         ));
@@ -48,14 +39,6 @@ if(!empty($_POST)){
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>成績管理アプリ</title>
-</head>
-<body>
     <form method="post" action="">
         <label for="number">学籍番号</label><br>
         <input type="text" id="number" name="number">
@@ -68,20 +51,9 @@ if(!empty($_POST)){
             <?php endif; ?>
             <br><br>
 
-        <label for="year">学年（1〜３の数字で入力）</label><br>
-        <input type="text" name="year" id="year">
-            <?php if($error['year'] == 'hankaku'): ?>
-                <span style="color:red;">半角で入力してください</span>
-            <?php endif; ?>
-
-            <?php if($error['year'] == 'blank'): ?>
-                <span style="color:red;">入力してください</span>
-            <?php endif; ?>
-            <br><br>
-
-        <label for="class">クラス</label><br>
-        <input type="text" id="class" name="class">
-            <?php if($error['class'] == 'blank'): ?>
+        <label for="class_id">クラスID</label><br>
+        <input type="text" id="class_id" name="class_id">
+            <?php if($error['class_id'] == 'blank'): ?>
                 <span style="color:red;">入力してください</span>
             <?php endif; ?>
             <br><br>
@@ -93,8 +65,9 @@ if(!empty($_POST)){
             <?php endif; ?>
             <br><br>
 
-        <input type="submit" value="追加する">
+        <input class="btn btn-primary" type="submit" value="追加する">
     </form>
-    <a href="index.php">戻る</a>
-</body>
-</html>
+    <a class="mt-3 mb-3 btn btn-secondary" href="index.php">戻る</a>
+<?php
+require('../components/footer.php');
+?>
