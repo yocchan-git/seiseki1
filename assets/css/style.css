@@ -1,0 +1,45 @@
+/* 共通で使うcss */
+
+/* headerで使うcss */
+
+.horizontal{
+    display: flex;
+    justify-content: space-between;
+    background-color: #f4f7f9;
+    width: 100%;
+    height: 80px;
+}
+.horizontal-nav{
+    margin-top: 25px;
+}
+.horizontal-nav a{
+    text-decoration: none;
+    color: #212529;
+}
+.horizontal-nav a:hover{
+    color: rgba(50, 1, 1, 0.644);
+}
+.horizontal-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+.horizontal-nav li {
+    margin-right: 10px;
+}
+.horizontal-nav ul:last-child {
+    margin-left: auto; 
+}
+.top-font{
+    font-size: large;/* TOPの文字だけ大きくする */
+}
+  
+
+/* registerで使うcss */
+.form-position{
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
