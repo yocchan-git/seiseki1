@@ -1,6 +1,6 @@
 <?php
-session_start();
-require('../db/dbconnect.php');
+require('../auth/login-check.php');
+require('../components/header.php');
 
 $id = $_GET['id'];
 
@@ -148,9 +148,9 @@ if(!empty($_POST)){
         <label for="goukei">合計</label><br>
         <input type="text" name="goukei" value="<?php echo $exam['goukei']; ?>" readonly><br><br>
 
-        <input type="submit" value="更新する">
+        <input class="btn btn-primary" type="submit" value="更新する">
     </form><br>
-    <a href="index.php">戻る</a>
+    <a class="mb-3 btn btn-secondary" href="index.php">戻る</a>
 
 <script>
 const calc = ()=>{
@@ -164,5 +164,6 @@ const calc = ()=>{
     goukei.value = Number(kokugo.value) + Number(sugaku.value) + Number(eigo.value) + Number(rika.value) + Number(shakai.value);
 }
 </script>
-</body>
-</html>
+<?php
+require('../components/footer.php');
+?>
