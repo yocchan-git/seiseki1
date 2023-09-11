@@ -1,6 +1,6 @@
 <?php
-session_start();
-require('../db/dbconnect.php');
+require('../auth/login-check.php');
+require('../components/header.php');
 
 $id = $_GET['id'];
 
@@ -15,16 +15,8 @@ if(!empty($_POST)){
         $error['number'] = 'blank';
     }
 
-    if(preg_match( '/^[0-9]+$/', $_POST['year']) == 0){
-        $error['year'] = 'hankaku';
-    }
-
-    if($_POST['year'] == ''){
-        $error['year'] = 'blank';
-    }
-
-    if($_POST['class'] == ''){
-        $error['class'] = 'blank';
+    if($_POST['class_id'] == ''){
+        $error['class_id'] = 'blank';
     }
 
     if($_POST['name'] == ''){
@@ -32,10 +24,9 @@ if(!empty($_POST)){
     }
 
     if(empty($error)){
-        $stmt = $db->prepare('update students set year=?, class=?, number=?, name=?, create_at=NOW() where id=?');
+        $stmt = $db->prepare('update students set class_id=?, number=?, name=?, create_at=NOW() where id=?');
         echo $ret = $stmt->execute(array(
-            $_SESSION['student']['year'],
-            $_SESSION['student']['class'],
+            $_SESSION['student']['class_id'],
             $_SESSION['student']['number'],
             $_SESSION['student']['name'],
             $id
@@ -54,14 +45,6 @@ $prepare->execute(array($id));
 $edit = $prepare->fetch();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>成績管理アプリ</title>
-</head>
-<body>
     <form method="post" action="">
         <label for="number">学籍番号</label><br>
         <input type="text" id="number" name="number" value="<?php echo $edit['number']; ?>">
@@ -74,33 +57,23 @@ $edit = $prepare->fetch();
             <?php endif; ?>
             <br><br>
 
-        <label for="year">学年（1〜３の数字で入力）</label><br>
-        <input type="text" name="year" id="year" value="<?php echo $edit['year']; ?>">
-            <?php if($error['year'] == 'hankaku'): ?>
-                <span style="color:red;">半角で入力してください</span>
-            <?php endif; ?>
-
-            <?php if($error['year'] == 'blank'): ?>
+        <label for="class">クラスID</label><br>
+        <input type="text" id="class" name="class_id" value="<?php echo $edit['class_id']; ?>">
+            <?php if($error['class_id'] == 'blank'): ?>
                 <span style="color:red;">入力してください</span>
             <?php endif; ?>
             <br><br>
 
-        <label for="class">クラス</label><br>
-        <input type="text" id="class" name="class" value="<?php echo $edit['class']; ?>">
-            <?php if($error['class'] == 'blank'): ?>
-                <span style="color:red;">入力してください</span>
-            <?php endif; ?>
-            <br><br>
-
-        <label for="name">テスト名</label><br>
+        <label for="name">名前</label><br>
         <input type="text" name="name" id="name" value="<?php echo $edit['name']; ?>">
             <?php if($error['name'] == 'blank'): ?>
                 <span style="color:red;">入力してください</span>
             <?php endif; ?>
             <br><br>
 
-        <input type="submit" value="更新する">
+        <input class="btn btn-primary" type="submit" value="更新する">
     </form>
-    <a href="index.php">戻る</a>
-</body>
-</html>
+    <a class="mt-3 mb-3 btn btn-secondary" href="index.php">戻る</a>
+<?php
+require('../components/footer.php');
+?>
