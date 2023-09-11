@@ -1,20 +1,11 @@
 <?php
-session_start();
-require('../db/dbconnect.php');
+require('../auth/login-check.php');
+require('../components/header.php');
 
 $tests = $db->query('SELECT * from tests');
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>成績管理アプリ</title>
-</head>
-<body>
-    <h1>テスト一覧</h1>
-    <table border=1>
+    <p class="h2 mt-3">年間のテスト一覧</p>
+    <table class="table table-bordered">
         <tr><th>学年</th><th>テスト名</th><th>作成日</th><th>変更はこちら</th><th>削除するか</th></tr>
         <?php foreach($tests as $test): ?>
         <tr>
@@ -28,5 +19,6 @@ $tests = $db->query('SELECT * from tests');
     </table>
     <a href="create.php">テストを作成する</a><br>
     <br><a href="../index.php">トップページ</a><br>
-</body>
-</html>
+<?php
+require('../components/footer.php');
+?>
