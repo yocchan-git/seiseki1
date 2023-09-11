@@ -1,6 +1,6 @@
 <?php
-session_start();
-require('../db/dbconnect.php');
+require('../auth/login-check.php');
+require('../components/header.php');
 
 $tests = $db->query('SELECT id,name from tests');
 $students = $db->query('SELECT id,name from students');
@@ -59,14 +59,7 @@ if(!empty($_POST)){
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>成績管理アプリ</title>
-</head>
-<body>
+
 
     <form action="" method="post">
         <p>テスト名を入力してください</p>
@@ -142,9 +135,9 @@ if(!empty($_POST)){
         <label for="goukei">合計</label><br>
         <input type="text" name="goukei" value="0" readonly><br><br>
 
-        <input type="submit" value="登録する">
+        <input class="btn btn-primary" type="submit" value="登録する">
     </form><br>
-    <a href="index.php">戻る</a>
+    <a class="mb-3 btn btn-secondary" href="index.php">戻る</a>
 
 <script>
 const calc = ()=>{
@@ -158,5 +151,6 @@ const calc = ()=>{
     goukei.value = Number(kokugo.value) + Number(sugaku.value) + Number(eigo.value) + Number(rika.value) + Number(shakai.value);
 }
 </script>
-</body>
-</html>
+<?php
+require('../components/footer.php');
+?>
