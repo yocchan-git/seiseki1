@@ -1,6 +1,6 @@
 <?php
-session_start();
-require('../db/dbconnect.php');
+require('../auth/login-check.php');
+require('../components/header.php');
 
 if(!empty($_POST)){
     $_SESSION['join'] = $_POST;
@@ -34,14 +34,6 @@ if(!empty($_POST)){
 
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>成績管理アプリ</title>
-</head>
-<body>
     <form method="post" action="">
         <label for="year">学年（1〜３の数字で入力）</label><br>
         <input type="text" name="year" id="year">
@@ -61,8 +53,9 @@ if(!empty($_POST)){
         <?php endif; ?>
         <br><br>
 
-        <input type="submit" value="追加する">
+        <input class="btn btn-primary" type="submit" value="追加する">
     </form>
-    <a href="index.php">戻る</a>
-</body>
-</html>
+    <a class="mt-3 btn btn-secondary" href="index.php">戻る</a>
+<?php
+require('../components/footer.php');
+?>
