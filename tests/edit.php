@@ -1,6 +1,6 @@
 <?php
-session_start();
-require('../db/dbconnect.php');
+require('../auth/login-check.php');
+require('../components/header.php');
 
 $id = $_GET['id'];
 
@@ -40,14 +40,6 @@ $prepare->execute(array($id));
 $edit = $prepare->fetch();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>成績管理アプリ</title>
-</head>
-<body>
     <form method="post" action="">
         <label for="year">学年（1〜３の数字で入力）</label><br>
         <input type="text" name="year" id="year" value="<?php echo $edit['year']; ?>">
@@ -67,8 +59,9 @@ $edit = $prepare->fetch();
         <?php endif; ?>
         <br><br>
 
-        <input type="submit" value="更新する">
+        <input class="btn btn-primary" type="submit" value="更新する">
     </form>
-    <a href="index.php">戻る</a>
-</body>
-</html>
+    <a class="mt-3 btn btn-secondary" href="index.php">戻る</a>
+<?php
+require('../components/footer.php');
+?>
