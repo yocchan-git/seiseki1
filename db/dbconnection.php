@@ -1,4 +1,25 @@
 <?php
+
+// class Database
+// {
+//     public static function dbConnect(){
+//         $dbName = 'seiseki';
+//         $host = 'localhost';
+//         $user = 'root';
+//         $password = 'root';
+//         $dsh = "mysql:dbname=$dbName;host=$host;charset=utf8";
+
+//         try{
+//             $db = new PDO($dsh, $user, $password);
+//         }catch(PDOException $e){
+//             echo 'DB接続エラー' . $e->getMessage();
+//             exit();
+//         }
+//         return $db;
+//     }
+// }
+
+// デプロイ用
 class Database
 {
     public static function dbConnect(){
@@ -17,5 +38,4 @@ class Database
         return $db;
     }
 }
-
 ?>
