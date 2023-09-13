@@ -9,36 +9,151 @@ $studentId = $_GET['student'];
 
 <!-- そのgetの内容に応じてデータベースからテスト結果を取得＆出力 -->
 <?php
-$studentStmt = $db->prepare('SELECT name from students where id=?');
-$studentStmt->execute(array($studentId));
-$studentName = $studentStmt->fetch();
-// $_GET['id'] == 0 なら生徒のidにマッチするテスト結果を全て出力
-if($testId == 0){
-    // studentIdにマッチするテスト結果を全部取得
-    $examStmt = $db->prepare('SELECT te.name,ex.kokugo,ex.sugaku,ex.eigo,ex.rika,ex.shakai,ex.goukei 
-    from exams as ex
-     inner join tests as te
-     on ex.test_id = te.id
-    where ex.student_id=?');
 
-    $examStmt->execute(array($studentId));
-    $examResults = $examStmt->fetchAll(PDO::FETCH_ASSOC);
-}else{
-    // testIdとstudentIdにマッチするテスト結果を取得
-    $examStmt = $db->prepare('SELECT te.name,ex.kokugo,ex.sugaku,ex.eigo,ex.rika,ex.shakai,ex.goukei 
-    from exams as ex
-     inner join tests as te
-     on ex.test_id = te.id
-    where ex.test_id=? and ex.student_id=?');
-    $examStmt->execute(array(
-        $testId,
-        $studentId
+if($_SESSION['post'] == 1){
+    $stmt = $db->prepare('SELECT class_id from teacher_classes where teacher_id=?');
+    $stmt->execute(array(
+        $_SESSION['id']
     ));
-    $examResults = $examStmt->fetchAll(PDO::FETCH_ASSOC);
+    $class = $stmt->fetch();
+
+    $studentStmt = $db->prepare('SELECT name,class_id from students where id=?');
+    $studentStmt->execute(array($studentId));
+    $student = $studentStmt->fetch();
+
+    if($class['class_id'] != $student['class_id']){
+        header('Location:error.php');
+        exit();
+    }
+    // $_GET['id'] == 0 なら生徒のidにマッチするテスト結果を全て出力
+    if($testId == 0){
+        // studentIdにマッチするテスト結果を全部取得
+        $examStmt = $db->prepare('SELECT te.name,ex.kokugo,ex.sugaku,ex.eigo,ex.rika,ex.shakai,ex.goukei 
+        from exams as ex
+        inner join tests as te
+        on ex.test_id = te.id
+        where ex.student_id=?');
+
+        $examStmt->execute(array($studentId));
+        $examResults = $examStmt->fetchAll(PDO::FETCH_ASSOC);
+    }else{
+        // testIdとstudentIdにマッチするテスト結果を取得
+        $examStmt = $db->prepare('SELECT te.name,ex.kokugo,ex.sugaku,ex.eigo,ex.rika,ex.shakai,ex.goukei 
+        from exams as ex
+        inner join tests as te
+        on ex.test_id = te.id
+        where ex.test_id=? and ex.student_id=?');
+        $examStmt->execute(array(
+            $testId,
+            $studentId
+        ));
+        $examResults = $examStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+}elseif($_SESSION['post'] == 2){
+    // 学年主任は担当の学年の生徒だけ
+
+    $studentStmt = $db->prepare('SELECT name from students where id=?');
+    $studentStmt->execute(array($studentId));
+    $student = $studentStmt->fetch();
+
+    // examsからyearを取り出す
+    // $examYearStmt = $db->prepare('SELECT name,class_id from students where id=?');
+    // $examYearStmt->execute(array($studentId));
+    // $student = $examYearStmt->fetch();
+    // 担当の学年と同じになるのかしらべる
+
+    // $_GET['id'] == 0 なら生徒のidにマッチするテスト結果を全て出力
+    if($testId == 0){
+        // studentIdにマッチするテスト結果を全部取得
+        $examStmt = $db->prepare('SELECT te.name,ex.year,ex.kokugo,ex.sugaku,ex.eigo,ex.rika,ex.shakai,ex.goukei 
+        from exams as ex
+        inner join tests as te
+        on ex.test_id = te.id
+        where ex.student_id=?');
+
+        $examStmt->execute(array($studentId));
+        $examResults = $examStmt->fetchAll(PDO::FETCH_ASSOC);
+    }else{
+        // testIdとstudentIdにマッチするテスト結果を取得
+        $examStmt = $db->prepare('SELECT te.name,ex.year,ex.kokugo,ex.sugaku,ex.eigo,ex.rika,ex.shakai,ex.goukei 
+        from exams as ex
+        inner join tests as te
+        on ex.test_id = te.id
+        where ex.test_id=? and ex.student_id=?');
+        $examStmt->execute(array(
+            $testId,
+            $studentId
+        ));
+        $examResults = $examStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    foreach($examResults as $exam){
+        if($_SESSION['shuninYear'] != $exam['year']){
+            header('Location:error.php');
+            exit();
+        }
+    }
+
+}else{
+    $studentStmt = $db->prepare('SELECT name from students where id=?');
+    $studentStmt->execute(array($studentId));
+    $student = $studentStmt->fetch();
+    // $_GET['id'] == 0 なら生徒のidにマッチするテスト結果を全て出力
+    if($testId == 0){
+        // studentIdにマッチするテスト結果を全部取得
+        $examStmt = $db->prepare('SELECT te.name,ex.kokugo,ex.sugaku,ex.eigo,ex.rika,ex.shakai,ex.goukei 
+        from exams as ex
+        inner join tests as te
+        on ex.test_id = te.id
+        where ex.student_id=?');
+
+        $examStmt->execute(array($studentId));
+        $examResults = $examStmt->fetchAll(PDO::FETCH_ASSOC);
+    }else{
+        // testIdとstudentIdにマッチするテスト結果を取得
+        $examStmt = $db->prepare('SELECT te.name,ex.kokugo,ex.sugaku,ex.eigo,ex.rika,ex.shakai,ex.goukei 
+        from exams as ex
+        inner join tests as te
+        on ex.test_id = te.id
+        where ex.test_id=? and ex.student_id=?');
+        $examStmt->execute(array(
+            $testId,
+            $studentId
+        ));
+        $examResults = $examStmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
+
+// $studentStmt = $db->prepare('SELECT name from students where id=?');
+// $studentStmt->execute(array($studentId));
+// $studentName = $studentStmt->fetch();
+// // $_GET['id'] == 0 なら生徒のidにマッチするテスト結果を全て出力
+// if($testId == 0){
+//     // studentIdにマッチするテスト結果を全部取得
+//     $examStmt = $db->prepare('SELECT te.name,ex.kokugo,ex.sugaku,ex.eigo,ex.rika,ex.shakai,ex.goukei 
+//     from exams as ex
+//      inner join tests as te
+//      on ex.test_id = te.id
+//     where ex.student_id=?');
+
+//     $examStmt->execute(array($studentId));
+//     $examResults = $examStmt->fetchAll(PDO::FETCH_ASSOC);
+// }else{
+//     // testIdとstudentIdにマッチするテスト結果を取得
+//     $examStmt = $db->prepare('SELECT te.name,ex.kokugo,ex.sugaku,ex.eigo,ex.rika,ex.shakai,ex.goukei 
+//     from exams as ex
+//      inner join tests as te
+//      on ex.test_id = te.id
+//     where ex.test_id=? and ex.student_id=?');
+//     $examStmt->execute(array(
+//         $testId,
+//         $studentId
+//     ));
+//     $examResults = $examStmt->fetchAll(PDO::FETCH_ASSOC);
+// }
 ?>
 
-<p>生徒名:<?php echo htmlspecialchars($studentName['name'],ENT_QUOTES); ?></p>
+<p>生徒名:<?php echo htmlspecialchars($student['name'],ENT_QUOTES); ?></p>
 <p>選択したテスト:
     <?php
     if($testId == 0){
