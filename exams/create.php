@@ -39,10 +39,11 @@ if(!empty($_POST)){
     }
 
     if(empty($error)){
-        $stmt = $db->prepare('INSERT into exams set test_id=?,student_id=?,kokugo=?,sugaku=?,eigo=?,rika=?,shakai=?,goukei=?,create_at=Now()');
+        $stmt = $db->prepare('INSERT into exams set test_id=?,student_id=?,year=?,kokugo=?,sugaku=?,eigo=?,rika=?,shakai=?,goukei=?,create_at=Now()');
         echo $ret = $stmt->execute(array(
             $_POST['test_id'],
             $_POST['student_id'],
+            $_POST['year'],
             $_POST['kokugo'],
             $_POST['sugaku'],
             $_POST['eigo'],
@@ -76,7 +77,10 @@ if(!empty($_POST)){
             <?php endforeach; ?>
         </select><br><br>
 
-        <p>各教科の点数を入力してください</p>
+        <label for="year">学年（半角）</label><br>
+        <input name="year" type="text" id="year" value=""><br><br>
+
+        <p class="mb-0">各教科の点数を入力してください</p>
         <label for="kokugo">国語</label><br>
         <input name="kokugo" type="text" id="kokugo" value="" onKeyup="calc()">
             <?php if($error['kokugo'] == 'hankaku'): ?>
