@@ -2,34 +2,43 @@
 require('../auth/login-check.php');
 require('../components/header.php');
 
-if(!empty($_POST)){
-    $_SESSION['join'] = $_POST;
-
-    if(preg_match( '/^[0-9]+$/', $_POST['year']) == 0){
-        $error['year'] = 'hankaku';
+// 校長先生だけがテストの登録をできるようにする
+if($_SESSION['post'] == 3){
+    if(!empty($_POST)){
+        $_SESSION['join'] = $_POST;
+    
+        if(preg_match( '/^[0-9]+$/', $_POST['year']) == 0){
+            $error['year'] = 'hankaku';
+        }
+    
+        if($_POST['year'] == ''){
+            $error['year'] = 'blank';
+        }
+    
+        if($_POST['name'] == ''){
+            $error['name'] = 'blank';
+        }
+    
+        if(empty($error)){
+            $stmt = $db->prepare('INSERT into tests set year=?, name=?, create_at=NOW()');
+            echo $ret = $stmt->execute(array(
+                $_SESSION['join']['year'],
+                $_SESSION['join']['name']
+            ));
+    
+            unset($_SESSION['join']);
+    
+            header('Location:index.php');
+            exit();
+        }
+        
     }
-
-    if($_POST['year'] == ''){
-        $error['year'] = 'blank';
-    }
-
-    if($_POST['name'] == ''){
-        $error['name'] = 'blank';
-    }
-
-    if(empty($error)){
-        $stmt = $db->prepare('INSERT into tests set year=?, name=?, create_at=NOW()');
-        echo $ret = $stmt->execute(array(
-            $_SESSION['join']['year'],
-            $_SESSION['join']['name']
-        ));
-
-        unset($_SESSION['join']);
-
-        header('Location:index.php');
+}else{
+    // 一般と学年主任はエラーページへ飛ばす
+    if(!empty($_POST)){
+        header('Location:error.php');
         exit();
     }
-    
 }
 
 ?>
