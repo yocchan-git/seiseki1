@@ -24,6 +24,7 @@ if(!empty($_POST)){
         // ログインの成否を確認する
         if($user){
             $_SESSION['id'] = $user['id'];
+            $_SESSION['post'] = $user['post'];
             $_SESSION['login_time'] = date("Y-n-j");
             if($_POST['save'] == 'on'){
                 // クッキーにログイン情報を記録
